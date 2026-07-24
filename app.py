@@ -46,19 +46,19 @@ with tab1:
 
             with col_b:
                 st.caption("Binary (2)")
-                st.code(b_val, language = "text")
+                st.code(b_val)
 
             with col_q:
                 st.caption("Quaternary (4)")
-                st.code(q_val, language = "text")
+                st.code(q_val)
 
             with col_o:
                 st.caption("Octal (8)")
-                st.code(o_val, language = "text")        
+                st.code(o_val)        
 
             with col_d:
                 st.caption("Decimal (10)")
-                st.code(d_val, language = "text")
+                st.code(d_val)
 
             with col_h:
                 st.caption("Hexadecimal (16)")
@@ -82,19 +82,36 @@ with tab2:
             fmt64 = format_ieee754(b64)
 
             st.markdown("### 32-bit (Single Precision)")
-            c1, c2, c3 = st.columns([1,2,5])
-            c1.metric("Sign", fmt32["Sign"])
-            c2.metric("Exponent", fmt32["Exponent"][0] if isinstance(fmt32["Exponent"], tuple) else fmt32["Exponent"])
-            c3.metric("Mantissa", fmt32["Mantissa"])
-            st.code(b32, language = "text")
+            c1, c2, c3 = st.columns(3)
+
+            with c1:
+                st.caption("Sign")
+                st.code(fmt32["Sign"])
+
+            with c2:
+                st.caption("Exponent")
+                st.code(fmt32["Exponent"][0] if isinstance(fmt32["Exponent"], tuple) else fmt32["Exponent"])
+
+            with c3:
+                st.caption("Mantissa")
+                st.code(fmt32["Mantissa"])
 
             st.markdown("---")
             st.markdown("### 64-bit (Double Precision)")
-            c1_64, c2_64, c3_64 = st.columns([1, 2, 5])
-            c1_64.metric("Sign", fmt64["Sign"])
-            c2_64.metric("Exponent", fmt64["Exponent"][0] if isinstance(fmt64["Exponent"], tuple) else fmt64["Exponent"])
-            c3_64.metric("Mantissa", fmt64["Mantissa"])
-            st.code(b64, language="text")
+
+            c1_64, c2_64, c3_64 = st.columns(3)
+
+            with c1_64:
+                st.caption("Sign")
+                st.code(fmt64["Sign"])
+
+            with c2_64:
+                st.caption("Exponent")
+                st.code(fmt64["Exponent"][0] if isinstance(fmt64["Exponent"], tuple) else fmt64["Exponent"])
+
+            with c3_64:
+                st.caption("Mantissa")
+                st.code(fmt64["Mantissa"])
 
         except ValueError:
             st.error("Please enter a valid decimal float number (for example, 3.14 or -12.375).")
