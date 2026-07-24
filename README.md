@@ -84,3 +84,7 @@ python main.py
 ```bash
 streamlit run app.py
 ```
+
+## Testing Web Application
+
+Visit [this page ](https://vahagmardyanbaseconverter.streamlit.app/)to use this converter from any device.
