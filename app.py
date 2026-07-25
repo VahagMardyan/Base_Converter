@@ -82,7 +82,7 @@ with tab2:
             fmt64 = format_ieee754(b64)
 
             st.markdown("### 32-bit (Single Precision)")
-            c1, c2, c3 = st.columns(3)
+            c1, c2, c3, c4 = st.columns(4)
 
             with c1:
                 st.caption("Sign")
@@ -96,10 +96,14 @@ with tab2:
                 st.caption("Mantissa")
                 st.code(fmt32["Mantissa"])
 
+            with c4:
+                st.caption("Full Number")
+                st.code(fmt32["Full Number"])
+
             st.markdown("---")
             st.markdown("### 64-bit (Double Precision)")
 
-            c1_64, c2_64, c3_64 = st.columns(3)
+            c1_64, c2_64, c3_64, c4_64 = st.columns(4)
 
             with c1_64:
                 st.caption("Sign")
@@ -112,6 +116,10 @@ with tab2:
             with c3_64:
                 st.caption("Mantissa")
                 st.code(fmt64["Mantissa"])
+
+            with c4_64:
+                st.caption("Full Number")
+                st.code(fmt64["Full Number"])
 
         except ValueError:
             st.error("Please enter a valid decimal float number (for example, 3.14 or -12.375).")

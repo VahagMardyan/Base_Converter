@@ -133,7 +133,7 @@ def ieee754_to_float(binary_str:str) -> tuple[float, str]: # (float_value, full_
     if len(parts) < 2:
         clean_str = binary_str.replace(" ", "")
         bits = len(clean_str)
-        if bits != 32 or bits != 64:
+        if bits != 32 and bits != 64:
             raise ValueError("String without spaces must be exactly 32 or 64 bit.")
         full_str = clean_str
     else:
