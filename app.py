@@ -1,5 +1,6 @@
 import streamlit as st
 from base_converter import convert_base, float_to_ieee754, format_ieee754, ieee754_to_float
+from alpha import characters
 
 st.set_page_config(page_title = "Base & IEEE-754 Converter", page_icon = "🔢", layout = 'wide')
 
@@ -8,25 +9,37 @@ st.write("Digital System Converter and IEEE-754 Standard Analyzer")
 
 tab1, tab2 = st.tabs(["Base Converter", "IEEE-754 (Floating Point)"])
 
+# Decimal Numbers
 with tab1:
     st.subheader("Conversion of integers between different systems")
-    col1, col2 = st.columns(2)
 
-    with col1:
-        input_num = st.text_input("Input an integer:", key = "base_input")
-        base_from = st.number_input("Base From:", min_value = 2, max_value = 36, value = 10)
-        signed = st.checkbox("Signed: ", value = False)
+    with st.form(key = "convert_form"):
 
-    with col2:
-        base_to = st.number_input("Base To:", min_value = 2, max_value = 36)
-        bits = st.selectbox("Bits:", options = [8, 16, 32, 64])
-        twos_complement = st.checkbox("Two's Complement", value = True)
+        col1, col2 = st.columns(2)
 
-    if st.button("Convert", type = "primary", key = "bin_convert"):
+        with col1:
+            input_num = st.text_input("Input an integer:", key = "base_input")
+            base_from = st.number_input("Base From:", min_value = 2, max_value = 36, value = 10)
+            signed = st.checkbox("Signed: ", value = False)
+
+        with col2:
+            base_to = st.number_input("Base To:", min_value = 2, max_value = 36)
+            bits = st.selectbox("Bits:", options = [8, 16, 32, 64])
+            twos_complement = st.checkbox("Two's Complement", value = True)
+
+        submitted = st.form_submit_button("Convert", type="primary")
+
+    if submitted:
         if input_num.strip():
             try:
-                res = convert_base(num_str=input_num, base_from=base_from, 
-                                   base_to=base_to, bits=bits, twos_complement=twos_complement, signed=signed)
+                res = convert_base(
+                    num_str=input_num,
+                    base_from=base_from,
+                    base_to=base_to,
+                    bits=bits,
+                    twos_complement=twos_complement,
+                    signed=signed
+                )
                 st.success(f"Result in {base_to}-th system: {res}")
             except Exception as e:
                 st.error(f"Error: {e}")
@@ -67,57 +80,69 @@ with tab1:
         except Exception as e:
             st.info("Enter a valid number to see it on all systems.")
 
+    # Characters Mapping
+
+    with st.expander("Show Base 36 Character Mapping (A=10, B=11 ... Z=35)"):
+        items = list(characters.items())
+        cols_per_row = 6
+        n = len(items)
+        for i in range(0, n, cols_per_row):
+            row = items[i : i + cols_per_row]
+            cols = st.columns(cols_per_row)
+
+            for j, (k,v) in enumerate(row):
+                cols[j].metric(label = k, value = v)
+
+# IEEE-754 Floating Point
 with tab2:
     st.subheader("Conversion of float numbers to the IEEE-754 binary standard")
-    float_input = st.text_input("Input floating number (e.g. -12.375)")
+    float_input = st.number_input("Input floating number (e.g. -12.375)")
 
-    if float_input.strip():
+    if float_input:
         try:
-            val_float = float(float_input)
-
-            b32 = float_to_ieee754(val_float, 32)
-            b64 = float_to_ieee754(val_float, 64)
+            b32 = float_to_ieee754(float_input, 32)
+            b64 = float_to_ieee754(float_input, 64)
 
             fmt32 = format_ieee754(b32)
             fmt64 = format_ieee754(b64)
 
             st.markdown("### 32-bit (Single Precision)")
-            c1, c2, c3, c4 = st.columns(4)
+            sign_32, exponent_32, mantissa_32, full_number_32 = st.columns(4)
 
-            with c1:
+            with sign_32:
                 st.caption("Sign")
                 st.code(fmt32["Sign"])
 
-            with c2:
+            with exponent_32:
                 st.caption("Exponent")
                 st.code(fmt32["Exponent"][0] if isinstance(fmt32["Exponent"], tuple) else fmt32["Exponent"])
 
-            with c3:
+            with mantissa_32:
                 st.caption("Mantissa")
                 st.code(fmt32["Mantissa"])
 
-            with c4:
+            with full_number_32:
                 st.caption("Full Number")
                 st.code(fmt32["Full Number"])
 
             st.markdown("---")
             st.markdown("### 64-bit (Double Precision)")
 
-            c1_64, c2_64, c3_64, c4_64 = st.columns(4)
+            sign_64, exponent_64, mantissa_64, full_number_64 = st.columns(4)
 
-            with c1_64:
+            with sign_64:
                 st.caption("Sign")
                 st.code(fmt64["Sign"])
 
-            with c2_64:
+            with exponent_64:
                 st.caption("Exponent")
                 st.code(fmt64["Exponent"][0] if isinstance(fmt64["Exponent"], tuple) else fmt64["Exponent"])
 
-            with c3_64:
+            with mantissa_64:
                 st.caption("Mantissa")
                 st.code(fmt64["Mantissa"])
 
-            with c4_64:
+            with full_number_64:
                 st.caption("Full Number")
                 st.code(fmt64["Full Number"])
 

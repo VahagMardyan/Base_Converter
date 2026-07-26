@@ -1,11 +1,13 @@
 import json
 from base_converter import convert_base, get_bases, ieee754_to_float, format_ieee754, float_to_ieee754
+from alpha import show_characters_mapping
 
 # --- Input / Output ---
 if __name__ == "__main__":
     print("Choose the option:")
     print("1 --> Standard Conversion (Int / Float to IEEE)")
     print("2 --> From IEEE-754 to Decimal Float")
+    print("alpha / a --> Show Base 36 Character Mapping (A=10, B=11 ... Z=35)")
     print("q (or any other key) --> Close the program")
     choice = input("Option: ").strip()
 
@@ -55,6 +57,11 @@ if __name__ == "__main__":
             print(json.dumps(output, indent=4, ensure_ascii=False))
         except Exception as e:
             print(f"Error: {e}.")
+
+    elif choice in ("alpha", 'a'):
+        print("---------------------------------------")
+        show_characters_mapping()
+
     else:
         print("Closing Program...")
         exit()

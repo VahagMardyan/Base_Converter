@@ -21,6 +21,7 @@ A lightweight, interactive web and CLI application built with **Streamlit** and 
 
 ```text
 ├── base_converter.py    # Core numerical conversion logic & IEEE-754 processing
+├── alpha.py			 # Show Base 36 Character Mapping (A=10, B=11 ... Z=35)
 ├── app.py               # Streamlit UI implementation
 ├── main.py              # Command Line Interface
 └── README.md            # Project documentation
