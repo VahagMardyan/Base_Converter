@@ -21,9 +21,10 @@ A lightweight, interactive web and CLI application built with **Streamlit** and 
 
 ```text
 ├── base_converter.py    # Core numerical conversion logic & IEEE-754 processing
-├── alpha.py			 # Show Base 36 Character Mapping (A=10, B=11 ... Z=35)
+├── alpha.py             # Base 36 Character Mapping (A=10, B=11 ... Z=35)
 ├── app.py               # Streamlit UI implementation
-├── main.py              # Command Line Interface
+├── cli.py               # Command Line Interface
+├── main.py              # Entry point to launch CLI or Web-GUI interface
 └── README.md            # Project documentation
 ```
 
@@ -64,7 +65,7 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-4. Install Streamlit (optional for Web UI):
+4. Install dependencies:
 
 ```bash
 pip install streamlit
@@ -72,12 +73,30 @@ pip install streamlit
 
 ---
 
-Running the Application
+## Usage
+
+### Interactive Entry Point (Recommended)
+
+Run `main.py` to select your preferred interface:
+
+```bash
+python main.py
+```
+
+```text
+Choose the interface. CLI / Web Interface.
+1 | cli | CLI --> CLI
+2 | web | WEB --> Web Interface
+Any other key --> Terminate Program
+Interface: 2
+```
+
+### Direct Execution
 
 * **CLI Interface:**
 
 ```bash
-python main.py
+python cli.py
 ```
 
 * **Web Interface:**
@@ -86,6 +105,15 @@ python main.py
 streamlit run app.py
 ```
 
-## Testing Web Application
+> **Local URL:** `http://localhost:8501`
+> **Network URL:** `http://<Host-Machine-IP>:8501` *(Accessible from devices on the same local network)*
 
-Visit [this page ](https://baseconverter-vahagmardyan.streamlit.app/)to use this converter from any device.
+---
+
+## Online Demo
+
+You can test the deployed application directly in your browser without installing anything:
+
+**[Live Streamlit App](https://baseconverter-vahagmardyan.streamlit.app/)**
+
+> **Note:** Requires an active internet connection.
