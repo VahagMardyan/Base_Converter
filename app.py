@@ -18,14 +18,14 @@ with tab1:
         col1, col2 = st.columns(2)
 
         with col1:
-            input_num = st.text_input("Input an integer:", key = "base_input")
-            base_from = st.number_input("Base From:", min_value = 2, max_value = 36, value = 10)
-            signed = st.checkbox("Signed: ", value = False)
+            input_num :str = st.text_input("Input an integer:", key = "base_input")
+            base_from :int = st.number_input("Base From:", min_value = 2, max_value = 36, value = 10)
+            signed :bool = st.checkbox("Signed: ", value = False)
 
         with col2:
-            base_to = st.number_input("Base To:", min_value = 2, max_value = 36)
-            bits = st.selectbox("Bits:", options = [8, 16, 32, 64])
-            twos_complement = st.checkbox("Two's Complement", value = True)
+            base_to :int = st.number_input("Base To:", min_value = 2, max_value = 36)
+            bits :int = st.selectbox("Bits:", options = [8, 16, 32, 64])
+            twos_complement :bool = st.checkbox("Two's Complement", value = True)
 
         submitted = st.form_submit_button("Convert", type="primary")
 
@@ -115,7 +115,8 @@ with tab2:
 
             with exponent_32:
                 st.caption("Exponent")
-                st.code(fmt32["Exponent"][0] if isinstance(fmt32["Exponent"], tuple) else fmt32["Exponent"])
+                exp_32 = fmt32["Exponent"][0]
+                st.code(f'{exp_32} : {int(exp_32, 2)}' if isinstance(fmt32["Exponent"], tuple) else fmt32["Exponent"])
 
             with mantissa_32:
                 st.caption("Mantissa")
@@ -136,7 +137,8 @@ with tab2:
 
             with exponent_64:
                 st.caption("Exponent")
-                st.code(fmt64["Exponent"][0] if isinstance(fmt64["Exponent"], tuple) else fmt64["Exponent"])
+                exp_64 = fmt64["Exponent"][0]
+                st.code(f"{exp_64} : {int(exp_64, 2)}" if isinstance(fmt64["Exponent"], tuple) else fmt64["Exponent"])
 
             with mantissa_64:
                 st.caption("Mantissa")
